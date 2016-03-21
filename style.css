@@ -1,0 +1,183 @@
+#schematic-utilities {
+    -fx-font-family: "Open Sans Semibold";
+    -fx-font-size: 32;
+    -fx-text-fill: azure;
+    -fx-label-padding: 0 0 0 20;
+    -fx-background-color: forestgreen;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 5,0,0,0 );
+}
+
+#schematic-utilities:hover {
+    -fx-font-family: "Open Sans Extrabold";
+    -fx-font-size: 32;
+    -fx-text-fill: azure;
+    -fx-label-padding: 0 0 0 20;
+    -fx-background-color: forestgreen;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 7.5,0,0,0 );
+}
+
+#files-selected {
+    -fx-font-family: "Open Sans Light";
+    -fx-label-padding: 10 20 20 30;
+}
+
+.list-cell .label {
+    -fx-font-family: "Open Sans Light";
+}
+
+.list-view {
+    -fx-border-radius: 0 0 0 0;
+    -fx-focus-color: forestgreen;
+}
+
+.list-view:disabled {
+    -fx-border-radius: 0 0 0 0;
+    -fx-focus-color: black;
+    -fx-background-color: lightslategray;
+}
+
+.list-view{
+    -fx-border-color:derive(forestgreen,80%);
+}
+
+.list-view .scroll-bar:horizontal ,
+.list-view  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
+}
+
+.list-view .increment-button ,.list-view .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(forestgreen,80%);
+    -fx-padding: 10;
+}
+
+.list-view .scroll-bar:horizontal .track ,
+.list-view .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color:derive(forestgreen,80%);
+    -fx-background-radius: 0;
+}
+
+.list-view .scroll-bar:horizontal .thumb,
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(forestgreen,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+}
+
+.list-view .scroll-bar:horizontal:hover .track ,
+.list-view .scroll-bar:horizontal:pressed .track ,
+.list-view .scroll-bar:vertical:hover .track,
+.list-view .scroll-bar:vertical:pressed .track{
+    -fx-background-color: derive(#434343,20%);
+
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+
+}
+
+.list-view .scroll-bar .thumb:hover,
+.list-view .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(forestgreen,50%);
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+}
+
+.list-view .increment-button:hover ,.list-view .decrement-button:hover {
+    -fx-background-color:derive(forestgreen,100%);
+    -fx-border-color:derive(forestgreen,80%);
+    -fx-padding:10px;
+}
+
+.list-cell {
+    -fx-background-color: azure;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: forestgreen;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+}
+
+.list-cell:filled:selected .label {
+    -fx-font-family: "Open Sans";
+    -fx-text-fill: azure;
+}
+
+.list-cell:selected .label {
+    -fx-font-family: "Open Sans";
+    -fx-text-fill: azure;
+}
+
+.list-cell:filled .label {
+    -fx-font-family: "Open Sans";
+    -fx-text-fill: azure;
+}
+
+.label {
+    -fx-font-family: "Open Sans Light";
+}
+
+.label:hover {
+    -fx-font-family: "Open Sans";
+}
+
+.button {
+    -fx-background-color: forestgreen;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+    -fx-font-family: "Open Sans Light";
+    -fx-text-fill: azure;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.button:hover {
+    -fx-background-color: limegreen;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+    -fx-font-family: "Open Sans";
+    -fx-text-fill: azure;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.button:disabled {
+    -fx-background-color: lightslategray;
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+    -fx-font-family: "Open Sans Light";
+    -fx-text-fill: black;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.check-box {
+    -fx-label-padding: 0 0 0 5;
+    -fx-focus-color: forestgreen;
+    -fx-border-width: 2.5;
+}
+
+.check-box:disabled {
+    -fx-focus-color: black;
+}
+
+.check-box .text {
+    -fx-text-fill: black;
+    -fx-font-family: "Open Sans Light";
+}
+
+.check-box .text:hover {
+    -fx-text-fill: black;
+    -fx-font-family: "Open Sans";
+}
+
+.check-box .box {
+    -fx-background-color: azure;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.check-box:disabled .box {
+    -fx-background-color: lightslategray;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.check-box:hover .box {
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 3,0,0,0 );
+}
+
+
