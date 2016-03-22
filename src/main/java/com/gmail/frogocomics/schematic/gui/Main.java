@@ -1,7 +1,7 @@
 package com.gmail.frogocomics.schematic.gui;
 
-import com.gmail.frogocomics.schematic.BiomeWorldObjectV2;
-import com.gmail.frogocomics.schematic.McEditSchematic;
+import com.gmail.frogocomics.schematic.BiomeWorldV2Object;
+import com.gmail.frogocomics.schematic.McEditSchematicObject;
 import com.gmail.frogocomics.schematic.SchematicLocation;
 import com.gmail.frogocomics.schematic.Schematics;
 
@@ -153,13 +153,13 @@ public final class Main extends Application {
                     for (SchematicLocation location : this.schematics) {
                         if (FilenameUtils.isExtension(location.getLocation().getName(), "schematic")) {
                             try {
-                                Schematics.schematics.add(McEditSchematic.load(location.getLocation()));
+                                Schematics.schematics.add(McEditSchematicObject.load(location.getLocation()));
                             } catch (ParseException | ClassicNotSupportedException | IOException e) {
                                 e.printStackTrace();
                             }
                         } else if (FilenameUtils.isExtension(location.getLocation().getName(), "bo2")) {
                             try {
-                                Schematics.schematics.add(BiomeWorldObjectV2.load(location.getLocation()));
+                                Schematics.schematics.add(BiomeWorldV2Object.load(location.getLocation()));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

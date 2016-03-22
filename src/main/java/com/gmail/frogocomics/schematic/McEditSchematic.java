@@ -1,36 +1,26 @@
 package com.gmail.frogocomics.schematic;
 
-import org.apache.commons.io.FilenameUtils;
-
 import java.io.File;
-import java.io.IOException;
 
-import klaue.mcschematictool.SchematicReader;
-import klaue.mcschematictool.SliceStack;
-import klaue.mcschematictool.exceptions.ClassicNotSupportedException;
-import klaue.mcschematictool.exceptions.ParseException;
+public class McEditSchematic implements SchematicType {
 
-public class McEditSchematic extends Schematic {
+    private static McEditSchematic instance = new McEditSchematic();
 
-    private SliceStack content;
-    private String name;
-
-    private McEditSchematic(SliceStack content, String name) {
-        this.content = content;
-        this.name = name;
+    private McEditSchematic() {
     }
 
-    public static McEditSchematic load(File file) throws ParseException, IOException, ClassicNotSupportedException {
-        return new McEditSchematic(SchematicReader.readSchematicsFile(file), FilenameUtils.getBaseName(file.getAbsolutePath()));
-    }
-
-    @Override
-    public SliceStack getContent() {
-        return content;
+    public static McEditSchematic getInstance() {
+        return instance;
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return "MCEdit Schematic";
     }
+
+    @Override
+    public SchematicExporter getExporter(File target) {
+        return new McEditSchematicExporter(target);
+    }
+
 }

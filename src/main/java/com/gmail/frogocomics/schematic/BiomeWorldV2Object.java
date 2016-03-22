@@ -19,17 +19,17 @@ import klaue.mcschematictool.Slice;
 import klaue.mcschematictool.SliceStack;
 import klaue.mcschematictool.blocktypes.Block;
 
-public class BiomeWorldObjectV2 extends Schematic {
+public class BiomeWorldV2Object extends SchematicObject {
 
     private SliceStack content;
     private String name;
 
-    private BiomeWorldObjectV2(SliceStack content, String name) {
+    private BiomeWorldV2Object(SliceStack content, String name) {
         this.content = content;
         this.name = name;
     }
 
-    public static BiomeWorldObjectV2 load(File file) throws IOException {
+    public static BiomeWorldV2Object load(File file) throws IOException {
 
         BufferedReader settingsReader;
 
@@ -95,7 +95,7 @@ public class BiomeWorldObjectV2 extends Schematic {
         }
         //System.out.println(schematic.toString());
 
-        return new BiomeWorldObjectV2(schematic, FilenameUtils.getBaseName(file.getAbsolutePath()));
+        return new BiomeWorldV2Object(schematic, FilenameUtils.getBaseName(file.getAbsolutePath()));
     }
 
     @Override
@@ -106,6 +106,16 @@ public class BiomeWorldObjectV2 extends Schematic {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getExtension() {
+        return ".bo2";
+    }
+
+    @Override
+    public SchematicType getType() {
+        return null;
     }
 
     private static class BiomeWorldObjectBlock {
@@ -139,4 +149,5 @@ public class BiomeWorldObjectV2 extends Schematic {
         }
 
     }
+
 }

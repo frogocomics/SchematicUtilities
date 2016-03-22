@@ -12,14 +12,14 @@ import java.util.ListIterator;
  */
 public class Schematics {
 
-    public static List<Schematic> schematics = new LinkedList<>();
+    public static List<SchematicObject> schematics = new LinkedList<>();
 
     /**
      * Get the schematics.
      *
      * @return Returns the schematics.
      */
-    public static List<Schematic> getSchematics() {
+    public static List<SchematicObject> getSchematics() {
         return Schematics.schematics;
     }
 
@@ -28,11 +28,12 @@ public class Schematics {
      * size.
      */
     public static void optimize() {
-        ListIterator<Schematic> iterator = schematics.listIterator();
+        ListIterator<SchematicObject> iterator = schematics.listIterator();
         while (iterator.hasNext()) {
-            Schematic next = iterator.next();
+            SchematicObject next = iterator.next();
             next.getContent().trim();
             iterator.set(next);
         }
     }
+
 }

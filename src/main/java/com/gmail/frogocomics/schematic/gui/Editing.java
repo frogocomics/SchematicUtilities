@@ -1,13 +1,29 @@
+/*
+ * Schematic Utilities, a program used to convert between different schematic formats.
+ *     Copyright (C) 2016  Jeff Chen
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published
+ *     by the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.gmail.frogocomics.schematic.gui;
 
 import com.google.common.io.Files;
 
-import com.gmail.frogocomics.schematic.Schematic;
+import com.gmail.frogocomics.schematic.SchematicTypes;
 import com.gmail.frogocomics.schematic.Schematics;
-import com.gmail.frogocomics.utils.ZipUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.geometry.Insets;
@@ -20,11 +36,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import klaue.mcschematictool.SchematicWriter;
-import klaue.mcschematictool.exceptions.ClassicNotSupportedException;
-import klaue.mcschematictool.exceptions.ParseException;
 
 public class Editing {
+
+    private static File tempDirectory;
+
+    private Editing() {}
 
     public static Scene getScene() {
 
@@ -112,31 +129,15 @@ public class Editing {
         export.setDisable(true);
         export.setOnAction(event -> {
 
+            Editing.tempDirectory = Files.createTempDir();
+
             FileChooser fileSaver = new FileChooser();
             fileSaver.setTitle("Save Files");
             fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("Compressed File", "*.zip"));
-            File file = fileSaver.showSaveDialog(Main.getInstance().getPrimaryStage());
-            File tempDirectory = Files.createTempDir();
+            File targetLocation = fileSaver.showSaveDialog(Main.getInstance().getPrimaryStage());
 
-            if (schematic.isSelected()) {
-                try {
-                    for (Schematic schematicToExport : Schematics.getSchematics()) {
-                        File schematicLocation = new File(tempDirectory.getAbsolutePath() + "\\" + schematicToExport.getName() + ".schematic");
-                        SchematicWriter.writeSchematicsFile(schematicToExport.getContent(), schematicLocation);
-                    }
-
-                    ZipUtils.zip(tempDirectory, file);
-                    Schematics.schematics.clear();
-
-                    Main.getInstance().getPrimaryStage().setScene(Main.getInstance().getMainScene());
-                    Main.getInstance().uploadFiles.setDisable(false);
-                    Main.getInstance().listView.setDisable(false);
-                    Main.getInstance().listView.getItems().clear();
-                    Main.getInstance().loadSchematics.setDisable(false);
-                    Main.getInstance().filesSelected.setText("There are currently 0 files selected");
-                } catch (IOException | ParseException | ClassicNotSupportedException e) {
-                    e.printStackTrace();
-                }
+            if(schematic.isSelected()) {
+                SchematicTypes.getTypeFrom(schematic, bo2, bo3).getExporter(targetLocation).exportTo(tempDirectory);
             }
         });
 
@@ -168,5 +169,9 @@ public class Editing {
         }
 
         return scene;
+    }
+
+    public static File getTemporaryDirectory() {
+        return Editing.tempDirectory;
     }
 }
