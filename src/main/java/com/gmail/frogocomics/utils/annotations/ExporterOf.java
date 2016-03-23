@@ -16,22 +16,18 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.gmail.frogocomics.schematic;
+package com.gmail.frogocomics.utils.annotations;
 
-import java.io.File;
+import com.gmail.frogocomics.schematic.SchematicObject;
+import com.gmail.frogocomics.schematic.SchematicType;
 
-/**
- * A exporter, to export a specific schematic type.
- *
- * @author Jeff Chen
- */
-public abstract class SchematicExporter {
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-    /**
-     * Export the schematics to a particular location
-     *
-     * @param tempDirectory The temporary directory created by the system. (Usually in
-     *                      AppData/Roaming)
-     */
-    public abstract void exportTo(File tempDirectory);
+@Retention(RetentionPolicy.SOURCE)
+public @interface ExporterOf {
+
+    Class<? extends SchematicObject> object() default SchematicObject.class;
+
+    Class<? extends SchematicType> type() default SchematicType.class;
 }

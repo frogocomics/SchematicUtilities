@@ -16,22 +16,26 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.gmail.frogocomics.schematic;
+package com.gmail.frogocomics.utils;
+
+import com.gmail.frogocomics.schematic.Schematics;
+import com.gmail.frogocomics.schematic.gui.Main;
 
 import java.io.File;
 
-/**
- * A exporter, to export a specific schematic type.
- *
- * @author Jeff Chen
- */
-public abstract class SchematicExporter {
+public class JavaFxUtils {
 
-    /**
-     * Export the schematics to a particular location
-     *
-     * @param tempDirectory The temporary directory created by the system. (Usually in
-     *                      AppData/Roaming)
-     */
-    public abstract void exportTo(File tempDirectory);
+    private JavaFxUtils() {
+    }
+
+    public static void reset(File tempDirectory) {
+        Schematics.schematics.clear();
+        Main.getInstance().getPrimaryStage().setScene(Main.getInstance().getMainScene());
+        Main.getInstance().uploadFiles.setDisable(false);
+        Main.getInstance().listView.setDisable(false);
+        Main.getInstance().listView.getItems().clear();
+        Main.getInstance().loadSchematics.setDisable(false);
+        Main.getInstance().filesSelected.setText("There are currently 0 files selected");
+        ((Runnable) tempDirectory::delete).run();
+    }
 }

@@ -21,8 +21,6 @@ public class Slice {
     /**
      * Returns a slice of the given size initialized to air
      *
-     * @param width
-     * @param height
      */
     public Slice(int width, int height) {
         this.blocks = new Block[width][];
@@ -44,6 +42,7 @@ public class Slice {
      */
     public Block getBlockAt(int x, int y) {
         if (x >= this.blocks.length || x < 0 || y >= this.blocks[x].length || y < 0) {
+            /*todo: remove later*/ System.out.println(getX() + " " + getZ());
             throw new IndexOutOfBoundsException(x + " (x) or " + y + " (y) not in slice");
         }
         return this.blocks[x][y];
@@ -69,7 +68,7 @@ public class Slice {
      *
      * @return the width
      */
-    public int getWidth() {
+    public int getX() {
         return this.blocks.length;
     }
 
@@ -78,7 +77,7 @@ public class Slice {
      *
      * @return the height
      */
-    public int getHeight() {
+    public int getZ() {
         return this.blocks[0].length;
     }
 
@@ -170,9 +169,9 @@ public class Slice {
      */
     public int getAirspaceLeft() {
         int airspace = 0;
-        for (int x = 0; x < this.getWidth(); ++x) {
+        for (int x = 0; x < this.getX(); ++x) {
             boolean emptyColumn = true;
-            for (int y = 0; y < this.getHeight(); ++y) {
+            for (int y = 0; y < this.getZ(); ++y) {
                 if (this.getBlockAt(x, y).getId() != 0) {
                     emptyColumn = false;
                     break;
@@ -194,9 +193,9 @@ public class Slice {
      */
     public int getAirspaceTop() {
         int airspace = 0;
-        for (int y = 0; y < this.getHeight(); ++y) {
+        for (int y = 0; y < this.getZ(); ++y) {
             boolean emptyColumn = true;
-            for (int x = 0; x < this.getWidth(); ++x) {
+            for (int x = 0; x < this.getX(); ++x) {
                 if (this.getBlockAt(x, y).getId() != 0) {
                     emptyColumn = false;
                     break;
@@ -218,9 +217,9 @@ public class Slice {
      */
     public int getAirspaceRight() {
         int airspace = 0;
-        for (int x = this.getWidth() - 1; x >= 0; --x) {
+        for (int x = this.getX() - 1; x >= 0; --x) {
             boolean emptyColumn = true;
-            for (int y = 0; y < this.getHeight(); ++y) {
+            for (int y = 0; y < this.getZ(); ++y) {
                 if (this.getBlockAt(x, y).getId() != 0) {
                     emptyColumn = false;
                     break;
@@ -242,9 +241,9 @@ public class Slice {
      */
     public int getAirspaceBottom() {
         int airspace = 0;
-        for (int y = this.getHeight() - 1; y >= 0; --y) {
+        for (int y = this.getZ() - 1; y >= 0; --y) {
             boolean emptyColumn = true;
-            for (int x = 0; x < this.getWidth(); ++x) {
+            for (int x = 0; x < this.getX(); ++x) {
                 if (this.getBlockAt(x, y).getId() != 0) {
                     emptyColumn = false;
                     break;
@@ -265,8 +264,8 @@ public class Slice {
      * @return true if all blocks of the slice are air blocks
      */
     public boolean isEmpty() {
-        for (int x = 0; x < this.getWidth(); ++x) {
-            for (int y = 0; y < this.getHeight(); ++y) {
+        for (int x = 0; x < this.getX(); ++x) {
+            for (int y = 0; y < this.getZ(); ++y) {
                 if (this.getBlockAt(x, y).getId() != 0) {
                     return false;
                 }
@@ -278,11 +277,11 @@ public class Slice {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (int y = 0; y < this.getHeight(); ++y) {
-            for (int x = 0; x < this.getWidth(); ++x) {
+        for (int y = 0; y < this.getZ(); ++y) {
+            for (int x = 0; x < this.getX(); ++x) {
                 sb.append("[" + this.getBlockAt(x, y).toString() + "]");
             }
-            if (y != this.getHeight() - 1) {
+            if (y != this.getZ() - 1) {
                 sb.append('\n');
             }
         }

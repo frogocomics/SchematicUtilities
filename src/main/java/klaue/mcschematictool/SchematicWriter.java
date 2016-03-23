@@ -83,8 +83,8 @@ public class SchematicWriter {
 
             for (int slz = 0; slz < stack.getHeight(); ++slz) {
                 Slice slice = stack.getSlice(slz);
-                for (int y = 0; y < slice.getHeight(); ++y) {
-                    for (int x = 0; x < slice.getWidth(); ++x) {
+                for (int y = 0; y < slice.getZ(); ++y) {
+                    for (int x = 0; x < slice.getX(); ++x) {
                         Block block = slice.getBlockAt(x, y);
                         blocks[blocknumber] = (byte) block.getId();
                         data[blocknumber] = block.getData();

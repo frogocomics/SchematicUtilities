@@ -53,8 +53,8 @@ public class SliceStack implements Iterable<Slice> {
             throw new IllegalArgumentException("A null slice is not allowed");
         }
         if (!this.stack.isEmpty()) {
-            if (this.stack.get(0).getWidth() != slice.getWidth() ||
-                    this.stack.get(0).getHeight() != slice.getHeight()) {
+            if (this.stack.get(0).getX() != slice.getX() ||
+                    this.stack.get(0).getZ() != slice.getZ()) {
                 throw new IllegalArgumentException("The new slice is of different size than the other(s)");
             }
         }
@@ -138,7 +138,7 @@ public class SliceStack implements Iterable<Slice> {
         if (this.stack.isEmpty()) {
             return 0;
         }
-        return this.stack.get(0).getWidth();
+        return this.stack.get(0).getX();
     }
 
     /**
@@ -150,7 +150,7 @@ public class SliceStack implements Iterable<Slice> {
         if (this.stack.isEmpty()) {
             return 0;
         }
-        return this.stack.get(0).getHeight();
+        return this.stack.get(0).getZ();
     }
 
     @Override
@@ -205,17 +205,17 @@ public class SliceStack implements Iterable<Slice> {
      * @throws InvalidParameterException
      */
     public void cutOff(int top, int bottom, int north, int east, int south, int west) {
-        if (this.stack.size() == 0 || this.getSlice(0).getWidth() == 0 || this.getSlice(0).getHeight() == 0) {
+        if (this.stack.size() == 0 || this.getSlice(0).getX() == 0 || this.getSlice(0).getZ() == 0) {
             return;
         }
 
         // check for top etc alone in case of integer overflow
         if (top < 0 || bottom < 0 || north < 0 || east < 0 || south < 0 || west < 0 ||
                 top >= this.stack.size() || bottom >= this.stack.size() ||
-                west >= this.getSlice(0).getWidth() || east >= this.getSlice(0).getWidth() ||
-                north >= this.getSlice(0).getHeight() || south >= this.getSlice(0).getHeight() ||
+                west >= this.getSlice(0).getX() || east >= this.getSlice(0).getX() ||
+                north >= this.getSlice(0).getZ() || south >= this.getSlice(0).getZ() ||
                 (top + bottom) >= this.stack.size() ||
-                (west + east) >= this.getSlice(0).getWidth() || (north + south) >= this.getSlice(0).getHeight()) {
+                (west + east) >= this.getSlice(0).getX() || (north + south) >= this.getSlice(0).getZ()) {
             StringBuffer errMsg = new StringBuffer();
             errMsg.append("Numbers either below zero or too large for the slicestack: ");
             errMsg.append("top: ").append(top).append(", ");
@@ -261,8 +261,8 @@ public class SliceStack implements Iterable<Slice> {
             } else {
                 // Note: this is basically a copy of slice.getImages(). I know that this is ugly, but what can I do..
                 Slice slice = this.stack.get(idx);
-                for (int i = 0; i < slice.getWidth(); ++i) {
-                    for (int j = 0; j < slice.getHeight(); ++j) {
+                for (int i = 0; i < slice.getX(); ++i) {
+                    for (int j = 0; j < slice.getZ(); ++j) {
                         if (slice.getBlockAt(i, j).isRedstoneWire()) {
                             boolean wireInNorth = false;
                             boolean wireInEast = false;
@@ -275,12 +275,12 @@ public class SliceStack implements Iterable<Slice> {
                                 wireInNorth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                         || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                             }
-                            if (slice.getWidth() - 1 != i) {
+                            if (slice.getX() - 1 != i) {
                                 Block b = slice.getBlockAt(i + 1, j);
                                 wireInEast = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                         || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                             }
-                            if (slice.getHeight() - 1 != j) {
+                            if (slice.getZ() - 1 != j) {
                                 Block b = slice.getBlockAt(i, j + 1);
                                 wireInSouth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                         || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
@@ -299,12 +299,12 @@ public class SliceStack implements Iterable<Slice> {
                                     wireInNorth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                                 }
-                                if (slice.getWidth() - 1 != i && !wireInEast) {
+                                if (slice.getX() - 1 != i && !wireInEast) {
                                     Block b = upperSlice.getBlockAt(i + 1, j);
                                     wireInEast = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                                 }
-                                if (slice.getHeight() - 1 != j && !wireInSouth) {
+                                if (slice.getZ() - 1 != j && !wireInSouth) {
                                     Block b = upperSlice.getBlockAt(i, j + 1);
                                     wireInSouth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
@@ -324,12 +324,12 @@ public class SliceStack implements Iterable<Slice> {
                                     wireInNorth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                                 }
-                                if (slice.getWidth() - 1 != i && !wireInEast && !blockBlocksWire(slice.getBlockAt(i + 1, j))) {
+                                if (slice.getX() - 1 != i && !wireInEast && !blockBlocksWire(slice.getBlockAt(i + 1, j))) {
                                     Block b = lowerSlice.getBlockAt(i + 1, j);
                                     wireInEast = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
                                 }
-                                if (slice.getHeight() - 1 != j && !wireInSouth && !blockBlocksWire(slice.getBlockAt(i, j + 1))) {
+                                if (slice.getZ() - 1 != j && !wireInSouth && !blockBlocksWire(slice.getBlockAt(i, j + 1))) {
                                     Block b = lowerSlice.getBlockAt(i, j + 1);
                                     wireInSouth = (b.isRedstoneWire() || b.isRedstoneTorch() || b.isLever() || b.isPressurePlate() || b.isButton()
                                             || b.isDetectorRail() || b.isRepeater() || b.isFenceGate());
@@ -354,11 +354,11 @@ public class SliceStack implements Iterable<Slice> {
                                 Block b = slice.getBlockAt(i, j - 1);
                                 wireInNorth = (b.isTripwire() || b.isTripwireHook());
                             }
-                            if (slice.getWidth() - 1 != i) {
+                            if (slice.getX() - 1 != i) {
                                 Block b = slice.getBlockAt(i + 1, j);
                                 wireInEast = (b.isTripwire() || b.isTripwireHook());
                             }
-                            if (slice.getHeight() - 1 != j) {
+                            if (slice.getZ() - 1 != j) {
                                 Block b = slice.getBlockAt(i, j + 1);
                                 wireInSouth = (b.isTripwire() || b.isTripwireHook());
                             }
@@ -411,8 +411,8 @@ public class SliceStack implements Iterable<Slice> {
         for (int i = 0; i < this.getHeight(); ++i) {
             text.add("##Layer " + (i + 1));
             Slice s = this.getSlice(i);
-            for (int y = 0; y < s.getHeight(); ++y) {
-                int width = s.getWidth();
+            for (int y = 0; y < s.getZ(); ++y) {
+                int width = s.getX();
                 StringBuffer sb = new StringBuffer((width * 2) - 1);
                 for (int x = 0; x < width; ++x) {
                     if (x != 0) {

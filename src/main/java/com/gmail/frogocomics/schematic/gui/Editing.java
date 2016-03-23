@@ -1,5 +1,5 @@
 /*
- * Schematic Utilities, a program used to convert between different schematic formats.
+ *     Schematic Utilities, a program used to convert between schematic formats.
  *     Copyright (C) 2016  Jeff Chen
  *
  *     This program is free software: you can redistribute it and/or modify
@@ -105,7 +105,6 @@ public class Editing {
                 bo2.setSelected(false);
             }
         });
-        bo2.setDisable(true);
         bo3.setDisable(true);
         HBox conversionOptions = new HBox(spacer2, schematic, bo2, bo3);
         conversionOptions.setSpacing(10);
@@ -136,9 +135,8 @@ public class Editing {
             fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("Compressed File", "*.zip"));
             File targetLocation = fileSaver.showSaveDialog(Main.getInstance().getPrimaryStage());
 
-            if(schematic.isSelected()) {
-                SchematicTypes.getTypeFrom(schematic, bo2, bo3).getExporter(targetLocation).exportTo(tempDirectory);
-            }
+            SchematicTypes.getTypeFrom(schematic, bo2, bo3).getExporter(targetLocation).exportTo(tempDirectory);
+
         });
 
         root.add(spacer8, 0, 8);
@@ -162,11 +160,12 @@ public class Editing {
         });
         root.add(new HBox(spacer6, go), 0, 7);
 
-        scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
         try {
             scene.getStylesheets().add(new File("style.css").toURI().toURL().toExternalForm());
-        } catch (MalformedURLException ignored) {
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+        scene.getStylesheets().add("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
 
         return scene;
     }

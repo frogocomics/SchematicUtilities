@@ -12,7 +12,7 @@ import klaue.mcschematictool.ImageProvider;
  * @author klaue
  */
 public class Anvil extends DirectionalBlock {
-    private static HashMap<Direction, BufferedImage> anvilImageCache = new HashMap<Direction, BufferedImage>();
+    private static HashMap<Direction, BufferedImage> anvilImageCache = new HashMap<>();
     private static double anvilZoomCache = -1;
     private AnvilCondition condition = AnvilCondition.MINT;
 

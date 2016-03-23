@@ -13,7 +13,7 @@ import klaue.mcschematictool.ImageProvider;
  * @author klaue
  */
 public class ColoredItem extends Item {
-    protected static HashMap<Short, HashMap<Short, HashMap<Color, BufferedImage>>> coloredItemCache = new HashMap<Short, HashMap<Short, HashMap<Color, BufferedImage>>>();
+    protected static HashMap<Short, HashMap<Short, HashMap<Color, BufferedImage>>> coloredItemCache = new HashMap<>();
     protected static double coloredZoomCache = -1;
     protected Color color = Color.WHITE;
 

@@ -76,8 +76,8 @@ public class ImageGrid extends JComponent implements Printable, MouseListener {
 
     private void calcNewSize() {
         if (this.slice != null) {
-            int sliceWidth = this.slice.getWidth();
-            int sliceHeight = this.slice.getHeight();
+            int sliceWidth = this.slice.getX();
+            int sliceHeight = this.slice.getZ();
 
             int width = sliceWidth * ((int) (imgDim.width * this.zoom));
             int height = sliceHeight * ((int) (imgDim.height * this.zoom));
@@ -136,8 +136,8 @@ public class ImageGrid extends JComponent implements Printable, MouseListener {
 
     @Override
     public void paint(Graphics g) {
-        int hzBlockNum = this.slice.getWidth();
-        int vtBlockNum = this.slice.getHeight();
+        int hzBlockNum = this.slice.getX();
+        int vtBlockNum = this.slice.getZ();
 
         if (this.slice == null || hzBlockNum == 0 || vtBlockNum == 0) {
             super.paint(g);
@@ -263,7 +263,7 @@ public class ImageGrid extends JComponent implements Printable, MouseListener {
      * @return the generated image
      */
     public BufferedImage exportImage(Color background, Color gridLines) {
-        if (this.slice == null || this.slice.getWidth() == 0 || this.slice.getHeight() == 0) {
+        if (this.slice == null || this.slice.getX() == 0 || this.slice.getZ() == 0) {
             return null;
         }
 
